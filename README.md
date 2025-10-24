@@ -7,8 +7,6 @@
 
 A lightweight fullstack starter built with Spring Boot &amp; React, perfect for tool systems, admin panels and mini apps.
 
-Demo site: [https://sparrow.asimov.top](https://sparrow.asimov.top), username: `root`, password: `Root@123.`
-
 ## Introduction
 While AI has made it easier to turn ideas into reality, building a clean, reliable, and extensible project foundation still requires thoughtful design, solid tech choices, and hands-on experience. 
 
