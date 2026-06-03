@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.asimov.sparrow.mapper.ProjectMapper">
+
+  <select id="selectPageByUserId" resultType="top.asimov.sparrow.model.entity.Project">
+    SELECT id,
+           user_id,
+           name,
+           owner,
+           status,
+           created_at,
+           updated_at
+    FROM project
+    WHERE user_id = #{userId}
+    ORDER BY updated_at DESC, id DESC
+  </select>
+
+  <select id="selectOwnedById" resultType="top.asimov.sparrow.model.entity.Project">
+    SELECT id,
+           user_id,
+           name,
+           owner,
+           status,
+           created_at,
+           updated_at
+    FROM project
+    WHERE id = #{id}
+      AND user_id = #{userId}
+    LIMIT 1
+  </select>
+</mapper>

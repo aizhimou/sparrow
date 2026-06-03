@@ -42,5 +42,8 @@ build/
 # Node modules if someone accidentally runs npm in wrong place
 node_modules/
 
+# Local dev runtime
+var/
+
 # OS
 .DS_Store

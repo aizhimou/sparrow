@@ -1,5 +1,6 @@
 import { Button, Paper, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
 import { IconLogin } from '@tabler/icons-react';
+import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../../app/auth/useAuth';
 
@@ -13,6 +14,7 @@ export function MobileLoginPage() {
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const state = location.state as LoginLocationState | null;
   const from = state?.from?.pathname ?? '/home';
 
@@ -20,9 +22,14 @@ export function MobileLoginPage() {
     return <Navigate to={from} replace />;
   }
 
-  function handleDemoSignIn() {
-    auth.signInDemo();
-    navigate(from, { replace: true });
+  async function handleDemoSignIn() {
+    setIsSigningIn(true);
+    try {
+      await auth.signInDemo();
+      navigate(from, { replace: true });
+    } finally {
+      setIsSigningIn(false);
+    }
   }
 
   return (
@@ -37,9 +44,14 @@ export function MobileLoginPage() {
           </Stack>
 
           <TextInput label="Email" value="demo@example.com" readOnly />
-          <PasswordInput label="Password" value="demo-password" readOnly />
+          <PasswordInput label="Password" value="password" readOnly />
 
-          <Button leftSection={<IconLogin size={16} />} onClick={handleDemoSignIn} fullWidth>
+          <Button
+            leftSection={<IconLogin size={16} />}
+            loading={isSigningIn}
+            onClick={handleDemoSignIn}
+            fullWidth
+          >
             Demo sign in
           </Button>
         </Stack>

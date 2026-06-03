@@ -1,0 +1,54 @@
+server:
+  port: ${SPARROW_BACKEND_PORT:8080}
+
+spring:
+  application:
+    name: sparrow-backend
+  datasource:
+    url: ${SPARROW_DATASOURCE_URL:jdbc:h2:file:./var/dev/h2/sparrow;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH}
+    username: ${SPARROW_DATASOURCE_USERNAME:sa}
+    password: ${SPARROW_DATASOURCE_PASSWORD:}
+    driver-class-name: org.h2.Driver
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    default-property-inclusion: non_null
+  h2:
+    console:
+      enabled: ${SPARROW_H2_CONSOLE_ENABLED:true}
+      path: /h2-console
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+
+sa-token:
+  token-name: Authorization
+  token-prefix: Bearer
+  timeout: 2592000
+  active-timeout: -1
+  is-concurrent: true
+  is-share: false
+  token-style: uuid
+  is-log: false
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+      show-components: never
+
+logging:
+  level:
+    root: info
+    top.asimov.sparrow: info
+    cn.dev33.satoken: warn

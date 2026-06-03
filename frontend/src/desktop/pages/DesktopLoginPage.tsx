@@ -1,4 +1,5 @@
 import { Button, Center, Paper, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
+import { useState } from 'react';
 import { IconLogin } from '@tabler/icons-react';
 import { Navigate, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../../app/auth/useAuth';
@@ -13,6 +14,7 @@ export function DesktopLoginPage() {
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const state = location.state as LoginLocationState | null;
   const from = state?.from?.pathname ?? '/home';
 
@@ -20,9 +22,14 @@ export function DesktopLoginPage() {
     return <Navigate to={from} replace />;
   }
 
-  function handleDemoSignIn() {
-    auth.signInDemo();
-    navigate(from, { replace: true });
+  async function handleDemoSignIn() {
+    setIsSigningIn(true);
+    try {
+      await auth.signInDemo();
+      navigate(from, { replace: true });
+    } finally {
+      setIsSigningIn(false);
+    }
   }
 
   return (
@@ -37,9 +44,13 @@ export function DesktopLoginPage() {
           </Stack>
 
           <TextInput label="Email" value="demo@example.com" readOnly />
-          <PasswordInput label="Password" value="demo-password" readOnly />
+          <PasswordInput label="Password" value="password" readOnly />
 
-          <Button leftSection={<IconLogin size={16} />} onClick={handleDemoSignIn}>
+          <Button
+            leftSection={<IconLogin size={16} />}
+            loading={isSigningIn}
+            onClick={handleDemoSignIn}
+          >
             Demo sign in
           </Button>
         </Stack>

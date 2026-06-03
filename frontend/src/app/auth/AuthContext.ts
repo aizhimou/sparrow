@@ -8,7 +8,7 @@ export type AuthUser = {
 export type AuthContextValue = {
   user: AuthUser | null;
   isAuthenticated: boolean;
-  signInDemo: () => void;
+  signInDemo: () => Promise<void>;
   signOut: () => void;
 };
 
