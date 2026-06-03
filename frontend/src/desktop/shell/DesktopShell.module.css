@@ -1,0 +1,11 @@
+.root {
+  min-height: 100vh;
+}
+
+.navLink {
+  border-radius: var(--mantine-radius-md);
+}
+
+.main {
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
